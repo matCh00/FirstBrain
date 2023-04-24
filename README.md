@@ -12,6 +12,10 @@ React + TypeScript + Ionic
 + cd appName
 + ionic serve
 
+## Docs
+
++ [https://ionicframework.com/docs/](https://ionicframework.com/docs/)
+
 
 <br>
 

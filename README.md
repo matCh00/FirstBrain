@@ -5,34 +5,33 @@ React + TypeScript + Ionic
 
 --------------------------
 
-## Init
+## App
 
-+ npm install -g @ionic/cli
-+ ionic start
-+ cd appName
-+ ionic serve
+Ionic
+  + `npm install -g @ionic/cli`
+  + `ionic start`
+  + `cd appName`
+  + `ionic serve`
 
 ## Docs
 
-+ [https://ionicframework.com/docs/](https://ionicframework.com/docs/)
++ [ionic](https://ionicframework.com/docs/)
 
-
-<br>
 
 --------------------------
 
 ## Github Pages
 
- Code
-  + `package.json` 
+config
+  + _package.json_
     + "homepage": "https://match00.github.io/FirstBrain/",
-  + npm install --save gh-pages
-  + `package.json -> scripts` 
+  + `npm install --save gh-pages`
+  + _package.json_ ➜ scripts
     + "predeploy": "npm run build",
     + "deploy": "gh-pages -d dist",
-  + npm run predeploy
-  + npm run deploy
+  + `npm run predeploy`
+  + `npm run deploy`
 
  GitHub
   + Pages
-    + `branch`  gh-pages
+    + _branch_ gh-pages

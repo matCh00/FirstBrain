@@ -5,6 +5,18 @@ React + TypeScript + Ionic
 
 --------------------------
 
+## Init
+
++ npm install -g @ionic/cli
++ ionic start
++ cd appName
++ ionic serve
+
+
+<br>
+
+--------------------------
+
 ## Github Pages
 
  Code

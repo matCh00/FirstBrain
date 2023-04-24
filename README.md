@@ -13,7 +13,8 @@ React + TypeScript + Ionic
   + npm install --save gh-pages
   + `package.json -> scripts` 
     + "predeploy": "npm run build",
-    + "deploy": "gh-pages -d build",
+    + "deploy": "gh-pages -d dist",
+  + npm run predeploy
   + npm run deploy
 
  GitHub

@@ -1,0 +1,7 @@
+{
+  "name": "firstbrain",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}

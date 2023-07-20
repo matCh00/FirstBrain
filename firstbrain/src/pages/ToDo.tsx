@@ -1,5 +1,4 @@
 import {
-  IonButton,
   IonContent,
   IonHeader,
   IonPage,
@@ -7,15 +6,19 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import React from "react";
-import { baseUrl } from "../App";
+import ListToDo from "../components/ListToDo";
+import { ItemToDo } from "../models/ItemToDo";
 
 
 const ToDo: React.FC = () => {
+
+  const items: Array<ItemToDo> = [{name: 'one', priority: 'ważne'}, {name: 'two', priority: 'średnie'}];
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>ToDo</IonTitle>
+          <IonTitle class="ion-justify-content-center">ToDo</IonTitle>
         </IonToolbar>
       </IonHeader>
 
@@ -25,8 +28,9 @@ const ToDo: React.FC = () => {
             <IonTitle size="large">ToDo</IonTitle>
           </IonToolbar>
         </IonHeader>
-        
-        <IonButton routerLink={baseUrl + "/app/todo/details"} expand="full">Details</IonButton>
+
+        <ListToDo items={items} />
+
       </IonContent>
     </IonPage>
   );

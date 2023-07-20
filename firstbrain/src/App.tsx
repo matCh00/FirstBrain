@@ -28,8 +28,8 @@ import "./theme/variables.css";
 
 setupIonicReact();
 
-//export const baseUrl = 'https://match00.github.io/FirstBrain/';
-export const baseUrl = "";
+// export const baseUrl = '/FirstBrain';
+export const baseUrl = '';
 
 
 const App: React.FC = () => (
@@ -39,7 +39,7 @@ const App: React.FC = () => (
 
         {/* <Route exact path={baseUrl + "/"} component={Login} /> */}
         <Route exact path={baseUrl + "/"}>
-          <Redirect to={baseUrl + "app"} />
+          <Redirect to={baseUrl + "/app"} />
         </Route>
 
         <Route path={baseUrl + "/app"} component={Tabs} />

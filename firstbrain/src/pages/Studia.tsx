@@ -1,5 +1,4 @@
 import {
-  IonButton,
   IonContent,
   IonHeader,
   IonPage,
@@ -7,10 +6,14 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import React from "react";
-import { baseUrl } from "../App";
+import ListStudia from "../components/ListStudia";
+import { ItemStudia } from "../models/ItemStudia";
 
 
 const Studia: React.FC = () => {
+
+  const items: Array<ItemStudia> = [{name: 'one', deadline: new Date()}, {name: 'two', deadline: new Date()}];
+
   return (
     <IonPage>
       <IonHeader>
@@ -25,8 +28,9 @@ const Studia: React.FC = () => {
             <IonTitle size="large">Studia</IonTitle>
           </IonToolbar>
         </IonHeader>
-        
-        <IonButton routerLink={baseUrl + "/app/studia/details"} expand="full">Details</IonButton>
+
+        <ListStudia items={items} />
+
       </IonContent>
     </IonPage>
   );

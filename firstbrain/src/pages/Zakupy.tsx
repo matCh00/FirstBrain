@@ -1,5 +1,4 @@
 import {
-  IonButton,
   IonContent,
   IonHeader,
   IonPage,
@@ -7,10 +6,14 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import React from "react";
-import { baseUrl } from "../App";
+import ListZakupy from "../components/ListZakupy";
+import { ItemZakupy } from "../models/ItemZakupy";
 
 
 const Zakupy: React.FC = () => {
+
+  const items: Array<ItemZakupy> = [{name: 'one', count: 2}, {name: 'two', count: 8}];
+
   return (
     <IonPage>
       <IonHeader>
@@ -25,8 +28,9 @@ const Zakupy: React.FC = () => {
             <IonTitle size="large">Zakupy</IonTitle>
           </IonToolbar>
         </IonHeader>
-        
-        <IonButton routerLink={baseUrl + "/app/zakupy/details"} expand="full">Details</IonButton>
+
+        <ListZakupy items={items} />
+
       </IonContent>
     </IonPage>
   );

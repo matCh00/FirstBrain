@@ -30,7 +30,7 @@ const List: React.FC<ListProps> = ({ items }) => {
 
           {items.map((i: ItemZakupy) => {
             return (
-              <IonItem key={i.name + i.count}>
+              <IonItem key={i.name + i.count} className="item">
                 <IonCol>{i.name}</IonCol>
                 <IonCol>{i.count}</IonCol>
                 <IonCol>

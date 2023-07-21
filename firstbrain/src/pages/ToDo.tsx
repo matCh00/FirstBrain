@@ -12,7 +12,12 @@ import { ItemToDo } from "../models/ItemToDo";
 
 const ToDo: React.FC = () => {
 
-  const items: Array<ItemToDo> = [{name: 'one', priority: 'ważne'}, {name: 'two', priority: 'średnie'}];
+  const items: Array<ItemToDo> = [
+    {name: 'one', priority: 'wysoki'}, 
+    {name: 'two', priority: 'średni'},
+    {name: 'three', priority: 'niski'},
+    {name: 'four', priority: 'średni'}
+  ];
 
   return (
     <IonPage>

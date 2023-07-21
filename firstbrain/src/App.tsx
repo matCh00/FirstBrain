@@ -28,8 +28,11 @@ import "./theme/variables.css";
 
 setupIonicReact();
 
-export const baseUrl = '/FirstBrain';
-// export const baseUrl = '';
+// PROD
+// export const baseUrl = '/FirstBrain';
+
+// DEV
+export const baseUrl = '';
 
 
 const App: React.FC = () => (

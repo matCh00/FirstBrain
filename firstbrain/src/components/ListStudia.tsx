@@ -30,9 +30,9 @@ const List: React.FC<ListProps> = ({ items }) => {
 
           {items.map((i: ItemStudia) => {
             return (
-              <IonItem key={i.name + i.deadline}>
+              <IonItem key={i.name + i.deadline} className="item">
                 <IonCol>{i.name}</IonCol>
-                <IonCol>{i.deadline + ''}</IonCol>
+                <IonCol>{i.deadline.toLocaleDateString("pl-PL", { year: 'numeric', month: '2-digit', day: '2-digit' })}</IonCol>
                 <IonCol>
                 <IonButton routerLink={baseUrl + "/app/studia/details"}>Szczegóły</IonButton>
                 </IonCol>

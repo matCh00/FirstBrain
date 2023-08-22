@@ -32,7 +32,14 @@ setupIonicReact();
 // export const baseUrl = '/FirstBrain';
 
 // DEV
-export const baseUrl = '';
+export let baseUrl = '';
+
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+  baseUrl = '';
+}
+else {
+  baseUrl = '/FirstBrain';
+}
 
 
 const App: React.FC = () => (
@@ -46,7 +53,14 @@ const App: React.FC = () => (
         </Route>
 
         <Route path={baseUrl + "/app"} component={Tabs} />
-        
+
+        <Redirect path={baseUrl + "/app/todo"} to={baseUrl + "/"} />
+        <Redirect path={baseUrl + "/app/todo/details"} to={baseUrl + "/"} />
+        <Redirect path={baseUrl + "/app/zakupy"} to={baseUrl + "/"} />
+        <Redirect path={baseUrl + "/app/zakupy/details"} to={baseUrl + "/"} />
+        <Redirect path={baseUrl + "/app/studia"} to={baseUrl + "/"} />
+        <Redirect path={baseUrl + "/app/studia/details"} to={baseUrl + "/"} />
+
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

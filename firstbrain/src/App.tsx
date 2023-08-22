@@ -25,6 +25,7 @@ import "@ionic/react/css/display.css";
 
 /* Theme variables */
 import "./theme/variables.css";
+import Login from "./pages/Login";
 
 setupIonicReact();
 
@@ -47,19 +48,12 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonRouterOutlet>
 
-        {/* <Route exact path={baseUrl + "/"} component={Login} /> */}
-        <Route exact path={baseUrl + "/"}>
-          <Redirect to={baseUrl + "/app"} />
-        </Route>
+        <Route exact path={baseUrl + "/"} component={Login} />
+        {/*<Route exact path={baseUrl + "/"}>*/}
+        {/*  <Redirect to={baseUrl + "/app"} />*/}
+        {/*</Route>*/}
 
         <Route path={baseUrl + "/app"} component={Tabs} />
-
-        <Redirect path={baseUrl + "/app/todo"} to={baseUrl + "/"} />
-        <Redirect path={baseUrl + "/app/todo/details"} to={baseUrl + "/"} />
-        <Redirect path={baseUrl + "/app/zakupy"} to={baseUrl + "/"} />
-        <Redirect path={baseUrl + "/app/zakupy/details"} to={baseUrl + "/"} />
-        <Redirect path={baseUrl + "/app/studia"} to={baseUrl + "/"} />
-        <Redirect path={baseUrl + "/app/studia/details"} to={baseUrl + "/"} />
 
       </IonRouterOutlet>
     </IonReactRouter>

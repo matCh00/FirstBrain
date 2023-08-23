@@ -1,24 +1,37 @@
 import {
+  IonButton,
   IonContent,
   IonHeader,
-  IonPage,
+  IonPage, IonRow,
   IonTitle,
-  IonToolbar,
+  IonToolbar, useIonRouter,
 } from "@ionic/react";
 import React from "react";
 import ListZakupy from "../components/ListZakupy";
-import { ItemZakupy } from "../models/ItemZakupy";
+import {ItemZakupy} from "../models/ItemZakupy";
+import {logOut as logOutUser} from "../backend/auth";
 
 
 const Zakupy: React.FC = () => {
 
+  const navigation = useIonRouter();
+
   const items: Array<ItemZakupy> = [{name: 'one', count: 2}, {name: 'two', count: 8}];
+
+  const logOut = () => {
+    logOutUser().then(() => {
+      navigation.push("/", "forward", "replace");
+    })
+  }
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Zakupy</IonTitle>
+          <IonRow>
+            <IonTitle class="ion-float-start">Zakupy</IonTitle>
+            <IonButton class="ion-float-end ion-margin" color="light" onClick={logOut}>Log out</IonButton>
+          </IonRow>
         </IonToolbar>
       </IonHeader>
 
@@ -29,7 +42,7 @@ const Zakupy: React.FC = () => {
           </IonToolbar>
         </IonHeader>
 
-        <ListZakupy items={items} />
+        <ListZakupy items={items}/>
 
       </IonContent>
     </IonPage>

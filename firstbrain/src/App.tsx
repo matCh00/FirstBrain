@@ -1,11 +1,12 @@
-import { Redirect, Route } from "react-router-dom";
+import {Route} from "react-router-dom";
 import {
   IonApp,
   IonRouterOutlet,
   setupIonicReact,
 } from "@ionic/react";
-import { IonReactRouter } from "@ionic/react-router";
+import {IonReactRouter} from "@ionic/react-router";
 import Tabs from "./pages/Tabs";
+import "./App.css"
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -37,8 +38,7 @@ export let baseUrl = '';
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   baseUrl = '';
-}
-else {
+} else {
   baseUrl = '/FirstBrain';
 }
 
@@ -48,12 +48,12 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonRouterOutlet>
 
-        <Route exact path={baseUrl + "/"} component={Login} />
+        <Route exact path={baseUrl + "/"} component={Login}/>
         {/*<Route exact path={baseUrl + "/"}>*/}
         {/*  <Redirect to={baseUrl + "/app"} />*/}
         {/*</Route>*/}
 
-        <Route path={baseUrl + "/app"} component={Tabs} />
+        <Route path={baseUrl + "/app"} component={Tabs}/>
 
       </IonRouterOutlet>
     </IonReactRouter>

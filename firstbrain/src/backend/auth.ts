@@ -2,12 +2,12 @@ import {createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} fro
 import {auth} from "./firebase";
 
 
-export async function register(email: string, password: string): Promise<void> {
+export async function register(email: string, password: string): Promise<any> {
   try {
-    await createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
-      const user = userCredential.user
-      console.log('Zarejestrowano pomyślnie.');
-    })
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    console.log('Zarejestrowano pomyślnie.');
+    return user;
   }
   catch (error) {
     console.error('Błąd logowania:', error);
@@ -15,12 +15,12 @@ export async function register(email: string, password: string): Promise<void> {
 }
 
 
-export async function logIn(email: string, password: string): Promise<void> {
+export async function logIn(email: string, password: string): Promise<any> {
   try {
-    await signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
-      const user = userCredential.user
-      console.log('Zalogowano pomyślnie.');
-    })
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    console.log('Zalogowano pomyślnie.');
+    return user;
   }
   catch (error) {
     console.error('Błąd logowania:', error);

@@ -1,0 +1,21 @@
+.login-container {
+    width: 30vw;
+    min-width: 6rem;
+    max-width: 20rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-button {
+    margin-top: 2rem;
+}
+
+.center-container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 8em
+}
+
+.margin-top-2 {
+    margin-top: 2rem;
+}

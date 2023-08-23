@@ -1,15 +1,15 @@
 import {
   IonButton, IonButtons,
   IonContent,
-  IonHeader, IonInput, IonItem, IonLabel, IonModal,
-  IonPage, IonRow,
+  IonHeader, IonInput, IonModal,
+  IonPage,
   IonTitle,
   IonToolbar,
-  useIonRouter,
+  useIonRouter, useIonToast,
 } from "@ionic/react";
 import {useForm, SubmitHandler} from "react-hook-form"
 import {useState} from "react";
-import {logIn, register as registerUser} from "../backend/auth";
+import {logIn as logInUser, register as registerUser} from "../backend/auth";
 
 
 type Inputs = {
@@ -21,37 +21,66 @@ const Login: React.FC = () => {
 
   const navigation = useIonRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [mode, setMode] = useState(-1);
+  const [present] = useIonToast();
 
-  const {
-    handleSubmit,
-    setValue,
-    register
-  } = useForm<Inputs>();
+  const {handleSubmit, setValue, register} = useForm<Inputs>();
+
+  const presentToast = () => {
+    present({
+      message: 'Incorrect credentials!',
+      duration: 2000,
+      position: 'top',
+      color: 'danger',
+      cssClass: 'margin-top-2'
+    });
+  };
 
   const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
-    registerUser(data.email, data.password).then(() => {
-      navigation.push("/app", "forward", "replace");
-    })
+    if (mode === 1)
+      logInUser(data.email, data.password).then((res) => {
+        if (res) {
+          setIsOpen(false);
+          navigation.push("/app", "forward", "replace");
+        } else
+          presentToast();
+      })
+    else if (mode === 2)
+      registerUser(data.email, data.password).then((res) => {
+        if (res) {
+          setIsOpen(false);
+          navigation.push("/app", "forward", "replace");
+        } else
+          presentToast();
+      })
+    else
+      return
   }
 
+
   const doLogin = () => {
+    setMode(1);
     setIsOpen(true);
-    // navigation.push("/app", "forward", "replace");
   };
 
   const doRegister = () => {
-    navigation.push("/app", "forward", "replace");
+    setMode(2);
+    setIsOpen(true);
   };
 
   const doPreview = () => {
+    setMode(3);
     navigation.push("/app", "forward", "replace");
   };
 
+
   const closeModal = () => {
+    setMode(-1);
     setIsOpen(false);
     setValue("email", '');
     setValue("password", '');
   }
+
 
   return (
     <IonPage>
@@ -61,22 +90,18 @@ const Login: React.FC = () => {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent className="ion-padding ion-justify-content-center">
-        <IonRow class="ion-justify-content-center">
-          <IonButton class="ion-margin" expand="full" onClick={() => doLogin()}>
+      <IonContent>
+        <div className="login-container">
+          <IonButton class="login-button" expand="full" onClick={() => doLogin()}>
             Login
           </IonButton>
-        </IonRow>
-        <IonRow class="ion-justify-content-center">
-          <IonButton class="ion-margin" expand="full" onClick={() => doRegister()}>
+          <IonButton class="login-button" expand="full" onClick={() => doRegister()}>
             Register
           </IonButton>
-        </IonRow>
-        <IonRow class="ion-justify-content-center">
-          <IonButton class="ion-margin" expand="full" onClick={() => doPreview()}>
+          <IonButton class="login-button" expand="full" onClick={() => doPreview()}>
             Preview
           </IonButton>
-        </IonRow>
+        </div>
       </IonContent>
 
       <IonModal isOpen={isOpen} onIonModalDidDismiss={() => closeModal()}>
@@ -98,6 +123,7 @@ const Login: React.FC = () => {
               label="email"
               labelPlacement="floating"
               fill="outline"
+              class="margin-top-2"
             />
 
             <IonInput
@@ -105,11 +131,11 @@ const Login: React.FC = () => {
               label="password"
               labelPlacement="floating"
               fill="outline"
-              class="ion-margin-top"
+              className="margin-top-2"
             />
 
-            <div className="ion-margin-top">
-              <IonButton type="submit" class="ion-float-right">
+            <div className="margin-top-2 center-container">
+              <IonButton type="submit">
                 Submit
               </IonButton>
             </div>

@@ -23,9 +23,9 @@ const List: React.FC<ListProps> = ({ items }) => {
 
         <IonList>
           <IonRow>
-            <IonCol>Nazwa</IonCol>
+            <IonCol>Name</IonCol>
             <IonCol>Deadline</IonCol>
-            <IonCol>Akcje</IonCol>
+            <IonCol>Actions</IonCol>
           </IonRow>
 
           {items.map((i: ItemStudia) => {
@@ -34,7 +34,7 @@ const List: React.FC<ListProps> = ({ items }) => {
                 <IonCol>{i.name}</IonCol>
                 <IonCol>{i.deadline.toLocaleDateString("pl-PL", { year: 'numeric', month: '2-digit', day: '2-digit' })}</IonCol>
                 <IonCol>
-                <IonButton routerLink={baseUrl + "/app/studia/details"}>Szczegóły</IonButton>
+                <IonButton routerLink={baseUrl + "/app/studia/details"}>Details</IonButton>
                 </IonCol>
               </IonItem>
             );

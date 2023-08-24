@@ -23,9 +23,9 @@ const List: React.FC<ListProps> = ({ items }) => {
 
         <IonList>
           <IonRow>
-            <IonCol>Nazwa</IonCol>
-            <IonCol>Ilość</IonCol>
-            <IonCol>Akcje</IonCol>
+            <IonCol>Name</IonCol>
+            <IonCol>Amount</IonCol>
+            <IonCol>Actions</IonCol>
           </IonRow>
 
           {items.map((i: ItemZakupy) => {
@@ -34,7 +34,7 @@ const List: React.FC<ListProps> = ({ items }) => {
                 <IonCol>{i.name}</IonCol>
                 <IonCol>{i.count}</IonCol>
                 <IonCol>
-                  <IonButton routerLink={baseUrl + "/app/zakupy/details"}>Szczegóły</IonButton>
+                  <IonButton routerLink={baseUrl + "/app/zakupy/details"}>Details</IonButton>
                 </IonCol>
               </IonItem>
             );

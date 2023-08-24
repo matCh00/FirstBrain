@@ -8,8 +8,10 @@ import {
   useIonRouter, useIonToast,
 } from "@ionic/react";
 import {useForm, SubmitHandler} from "react-hook-form"
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {logIn as logInUser, register as registerUser} from "../backend/auth";
+import {addDefaultCollections} from "../backend/api";
+import {GlobalContext} from "../utils/GlobalContext";
 
 
 type Inputs = {
@@ -36,11 +38,14 @@ const Login: React.FC = () => {
     });
   };
 
+  const {userId, setUserId} = useContext(GlobalContext);
+
   const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
     if (mode === 1)
       logInUser(data.email, data.password).then((res) => {
         if (res) {
           setIsOpen(false);
+          setUserId(res.uid);
           navigation.push("/app", "forward", "replace");
         } else
           presentToast();
@@ -49,6 +54,8 @@ const Login: React.FC = () => {
       registerUser(data.email, data.password).then((res) => {
         if (res) {
           setIsOpen(false);
+          setUserId(res.uid);
+          addDefaultCollections(res.uid);
           navigation.push("/app", "forward", "replace");
         } else
           presentToast();

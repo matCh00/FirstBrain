@@ -6,15 +6,18 @@ import {
   IonTitle,
   IonToolbar, useIonRouter,
 } from "@ionic/react";
-import React from "react";
+import React, {useContext} from "react";
 import ListToDo from "../components/ListToDo";
 import {ItemToDo} from "../models/ItemToDo";
 import {logOut as logOutUser} from "../backend/auth";
+import {GlobalContext} from "../utils/GlobalContext";
 
 
 const ToDo: React.FC = () => {
 
   const navigation = useIonRouter();
+
+  const {userId, setUserId} = useContext(GlobalContext);
 
   const items: Array<ItemToDo> = [
     {name: 'one', priority: 'wysoki'},
@@ -26,6 +29,7 @@ const ToDo: React.FC = () => {
   const logOut = () => {
     logOutUser().then(() => {
       navigation.push("/", "forward", "replace");
+      setUserId(null);
     })
   }
 
@@ -35,7 +39,7 @@ const ToDo: React.FC = () => {
         <IonToolbar>
           <IonRow>
             <IonTitle class="ion-float-start">ToDo</IonTitle>
-            <IonButton class="ion-float-end ion-margin" color="light" onClick={logOut}>Log out</IonButton>
+            <IonButton class="ion-float-end ion-margin" color="primary" onClick={logOut}>Log out</IonButton>
           </IonRow>
         </IonToolbar>
       </IonHeader>

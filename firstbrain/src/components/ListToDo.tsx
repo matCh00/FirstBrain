@@ -12,7 +12,7 @@ import {
 } from "@ionic/react";
 import { ItemToDo } from "../models/ItemToDo";
 import { baseUrl } from "../App";
-import { PriorityEnum, PriorityEnum2 } from "../utils/Priority";
+import { PriorityEnum2 } from "../utils/Priority";
 
 interface ListProps {
   items: Array<ItemToDo>;
@@ -32,9 +32,9 @@ const ListToDo: React.FC<ListProps> = ({ items }) => {
 
         <IonList>
           <IonRow>
-            <IonCol>Nazwa</IonCol>
-            <IonCol>Priorytet</IonCol>
-            <IonCol>Akcje</IonCol>
+            <IonCol>Name</IonCol>
+            <IonCol>Priority</IonCol>
+            <IonCol>Actions</IonCol>
           </IonRow>
 
           {items.map((i: ItemToDo) => {
@@ -43,7 +43,7 @@ const ListToDo: React.FC<ListProps> = ({ items }) => {
                 <IonCol>{i.name}</IonCol>
                 <IonCol><IonLabel color={getSeverity(i.priority)}>{i.priority}</IonLabel></IonCol>
                 <IonCol>
-                  <IonButton routerLink={baseUrl + "/app/todo/details"}>Szczegóły</IonButton>
+                  <IonButton routerLink={baseUrl + "/app/todo/details"}>Details</IonButton>
                 </IonCol>
               </IonItem>
             );

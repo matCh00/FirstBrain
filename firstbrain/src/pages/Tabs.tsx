@@ -1,12 +1,10 @@
 import {
-  IonButton,
-  IonButtons, IonHeader,
   IonIcon,
   IonLabel,
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
-  IonTabs, IonTitle, IonToolbar,
+  IonTabs,
 } from "@ionic/react";
 import {Redirect, Route} from "react-router";
 import ToDo from "./ToDo";
@@ -15,24 +13,44 @@ import Studia from "./Studia";
 import Details from "./Details";
 import {library, receipt, layers} from "ionicons/icons";
 import {baseUrl} from "../App";
+import {useContext} from "react";
+import {GlobalContext} from "../utils/GlobalContext";
 
 
 const Tabs: React.FC = () => {
+
+  const {userId} = useContext(GlobalContext);
+
   return (
     <IonTabs>
 
       <IonRouterOutlet>
-        <Route exact path={baseUrl + "/app/todo"} component={ToDo}/>
-        <Route exact path={baseUrl + "/app/todo/details"} component={Details}/>
-
-        <Route exact path={baseUrl + "/app/zakupy"} component={Zakupy}/>
-        <Route exact path={baseUrl + "/app/zakupy/details"} component={Details}/>
-
-        <Route exact path={baseUrl + "/app/studia"} component={Studia}/>
-        <Route exact path={baseUrl + "/app/studia/details"} component={Details}/>
-
         <Route exact path={baseUrl + "/app"}>
-          <Redirect to={baseUrl + "/app/todo"}/>
+          {userId !== null
+            ? <Redirect to={baseUrl + "/app/todo"}/>
+            : <Redirect to={baseUrl + "/"} />
+          }
+        </Route>
+
+        <Route exact path={baseUrl + "/app/todo"} component={ToDo}>
+          {!userId && <Redirect to={baseUrl + "/"}/>}
+        </Route>
+        <Route exact path={baseUrl + "/app/todo/details"} component={Details}>
+          {!userId && <Redirect to={baseUrl + "/"}/>}
+        </Route>
+
+        <Route exact path={baseUrl + "/app/zakupy"} component={Zakupy}>
+          {!userId && <Redirect to={baseUrl + "/"}/>}
+        </Route>
+        <Route exact path={baseUrl + "/app/zakupy/details"} component={Details}>
+          {!userId && <Redirect to={baseUrl + "/"}/>}
+        </Route>
+
+        <Route exact path={baseUrl + "/app/studia"} component={Studia}>
+          {!userId && <Redirect to={baseUrl + "/"}/>}
+        </Route>
+        <Route exact path={baseUrl + "/app/studia/details"} component={Details}>
+          {!userId && <Redirect to={baseUrl + "/"}/>}
         </Route>
       </IonRouterOutlet>
 
@@ -45,12 +63,12 @@ const Tabs: React.FC = () => {
 
         <IonTabButton tab="zakupy" href={baseUrl + "/app/zakupy"}>
           <IonIcon icon={receipt}></IonIcon>
-          <IonLabel>Zakupy</IonLabel>
+          <IonLabel>Shopping</IonLabel>
         </IonTabButton>
 
         <IonTabButton tab="studia" href={baseUrl + "/app/studia"}>
           <IonIcon icon={library}></IonIcon>
-          <IonLabel>Studia</IonLabel>
+          <IonLabel>University</IonLabel>
         </IonTabButton>
       </IonTabBar>
     </IonTabs>

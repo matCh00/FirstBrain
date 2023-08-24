@@ -2,6 +2,20 @@ import { firestore } from "./firebase";
 import { collection, getDocs, addDoc, doc, setDoc, query, where, deleteDoc } from "firebase/firestore";
 
 
+export async function addDefaultCollections(userId: string): Promise<void> {
+  const userRef = collection(firestore, userId);
+
+  const docRef1 = doc(userRef, 'todo')
+  await setDoc(docRef1, {});
+
+  const docRef2 = doc(userRef, 'zakupy')
+  await setDoc(docRef2, {});
+
+  const docRef3 = doc(userRef, 'studia')
+  await setDoc(docRef3, {});
+}
+
+
 export async function getAllCollections(userId: string): Promise<any[]> {
   const userRef = collection(firestore, userId);
   const snapshot = await getDocs(userRef);

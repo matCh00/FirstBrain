@@ -38,13 +38,14 @@ const Login: React.FC = () => {
     });
   };
 
-  const {userId, setUserId} = useContext(GlobalContext);
+  const {setUserName, setUserId} = useContext(GlobalContext);
 
   const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
     if (mode === 1)
       logInUser(data.email, data.password).then((res) => {
         if (res) {
           setIsOpen(false);
+          setUserName(res.email);
           setUserId(res.uid);
           navigation.push("/app", "forward", "replace");
         } else
@@ -54,6 +55,7 @@ const Login: React.FC = () => {
       registerUser(data.email, data.password).then((res) => {
         if (res) {
           setIsOpen(false);
+          setUserName(res.email);
           setUserId(res.uid);
           addDefaultCollections(res.uid);
           navigation.push("/app", "forward", "replace");
@@ -77,6 +79,8 @@ const Login: React.FC = () => {
 
   const doPreview = () => {
     setMode(3);
+    setUserId('test');
+    setUserName('test');
     navigation.push("/app", "forward", "replace");
   };
 

@@ -1,7 +1,7 @@
 import {
   IonButton,
   IonContent,
-  IonHeader,
+  IonHeader, IonLabel,
   IonPage, IonRow,
   IonTitle,
   IonToolbar, useIonRouter,
@@ -17,7 +17,7 @@ const Zakupy: React.FC = () => {
 
   const navigation = useIonRouter();
 
-  const {userId, setUserId} = useContext(GlobalContext);
+  const {userName, setUserName, setUserId} = useContext(GlobalContext);
 
   const items: Array<ItemZakupy> = [{name: 'one', count: 2}, {name: 'two', count: 8}];
 
@@ -25,6 +25,7 @@ const Zakupy: React.FC = () => {
     logOutUser().then(() => {
       navigation.push("/", "forward", "replace");
       setUserId(null);
+      setUserName(null);
     })
   }
 
@@ -32,9 +33,10 @@ const Zakupy: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonRow>
-            <IonTitle class="ion-float-start">Shopping</IonTitle>
-            <IonButton class="ion-float-end ion-margin" color="primary" onClick={logOut}>Log out</IonButton>
+          <IonRow class="ion-justify-content-between ion-align-items-center">
+            <div><IonTitle>Shopping</IonTitle></div>
+            <div><IonLabel style={{marginTop: '1.5rem'}}>{userName}</IonLabel></div>
+            <div><IonButton class="ion-margin" color="primary" onClick={logOut}>Log out</IonButton></div>
           </IonRow>
         </IonToolbar>
       </IonHeader>
@@ -45,6 +47,8 @@ const Zakupy: React.FC = () => {
             <IonTitle size="large">Zakupy</IonTitle>
           </IonToolbar>
         </IonHeader>
+
+        <IonButton class="ion-margin" fill="outline" expand="block">Add</IonButton>
 
         <ListZakupy items={items}/>
 

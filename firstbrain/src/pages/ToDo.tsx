@@ -1,7 +1,7 @@
 import {
   IonButton,
   IonContent,
-  IonHeader,
+  IonHeader, IonLabel,
   IonPage, IonRow,
   IonTitle,
   IonToolbar, useIonRouter,
@@ -17,7 +17,7 @@ const ToDo: React.FC = () => {
 
   const navigation = useIonRouter();
 
-  const {userId, setUserId} = useContext(GlobalContext);
+  const {userName, setUserName, setUserId} = useContext(GlobalContext);
 
   const items: Array<ItemToDo> = [
     {name: 'one', priority: 'wysoki'},
@@ -30,6 +30,7 @@ const ToDo: React.FC = () => {
     logOutUser().then(() => {
       navigation.push("/", "forward", "replace");
       setUserId(null);
+      setUserName(null);
     })
   }
 
@@ -37,9 +38,10 @@ const ToDo: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonRow>
-            <IonTitle class="ion-float-start">ToDo</IonTitle>
-            <IonButton class="ion-float-end ion-margin" color="primary" onClick={logOut}>Log out</IonButton>
+          <IonRow class="ion-justify-content-between ion-align-items-center">
+            <div><IonTitle>ToDo</IonTitle></div>
+            <div><IonLabel style={{marginTop: '1.5rem'}}>{userName}</IonLabel></div>
+            <div><IonButton class="ion-margin" color="primary" onClick={logOut}>Log out</IonButton></div>
           </IonRow>
         </IonToolbar>
       </IonHeader>
@@ -50,6 +52,8 @@ const ToDo: React.FC = () => {
             <IonTitle size="large">ToDo</IonTitle>
           </IonToolbar>
         </IonHeader>
+
+        <IonButton class="ion-margin" fill="outline" expand="block">Add</IonButton>
 
         <ListToDo items={items}/>
 

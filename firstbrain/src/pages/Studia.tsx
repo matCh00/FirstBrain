@@ -1,7 +1,7 @@
 import {
   IonButton,
   IonContent,
-  IonHeader,
+  IonHeader, IonLabel,
   IonPage, IonRow,
   IonTitle,
   IonToolbar, useIonRouter,
@@ -17,7 +17,7 @@ const Studia: React.FC = () => {
 
   const navigation = useIonRouter();
 
-  const {userId, setUserId} = useContext(GlobalContext);
+  const {userName, setUserName, setUserId} = useContext(GlobalContext);
 
   const items: Array<ItemStudia> = [{name: 'one', deadline: new Date()}, {name: 'two', deadline: new Date()}];
 
@@ -25,6 +25,7 @@ const Studia: React.FC = () => {
     logOutUser().then(() => {
       navigation.push("/", "forward", "replace");
       setUserId(null);
+      setUserName(null);
     })
   }
 
@@ -32,9 +33,10 @@ const Studia: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonRow>
-            <IonTitle class="ion-float-start">University</IonTitle>
-            <IonButton class="ion-float-end ion-margin" color="primary" onClick={logOut}>Log out</IonButton>
+          <IonRow class="ion-justify-content-between ion-align-items-center">
+            <div><IonTitle>University</IonTitle></div>
+            <div><IonLabel style={{marginTop: '1.5rem'}}>{userName}</IonLabel></div>
+            <div><IonButton class="ion-margin" color="primary" onClick={logOut}>Log out</IonButton></div>
           </IonRow>
         </IonToolbar>
       </IonHeader>
@@ -45,6 +47,8 @@ const Studia: React.FC = () => {
             <IonTitle size="large">Studia</IonTitle>
           </IonToolbar>
         </IonHeader>
+
+        <IonButton class="ion-margin" fill="outline" expand="block">Add</IonButton>
 
         <ListStudia items={items}/>
 

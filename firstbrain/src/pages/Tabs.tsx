@@ -21,6 +21,7 @@ const Tabs: React.FC = () => {
 
   const {userId} = useContext(GlobalContext);
 
+
   return (
     <IonTabs>
 
@@ -28,7 +29,7 @@ const Tabs: React.FC = () => {
         <Route exact path={baseUrl + "/app"}>
           {userId !== null
             ? <Redirect to={baseUrl + "/app/todo"}/>
-            : <Redirect to={baseUrl + "/"} />
+            : <Redirect to={baseUrl + "/"}/>
           }
         </Route>
 

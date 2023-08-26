@@ -1,33 +1,28 @@
 import {
   IonButton,
-  IonContent,
-  IonHeader, IonLabel,
+  IonContent, IonFab, IonFabButton,
+  IonHeader, IonIcon, IonLabel,
   IonPage, IonRow,
   IonTitle,
-  IonToolbar, useIonRouter,
+  IonToolbar,
 } from "@ionic/react";
 import React, {useContext} from "react";
 import ListStudia from "../components/ListStudia";
 import {ItemStudia} from "../models/ItemStudia";
-import {logOut as logOutUser} from "../backend/auth";
 import {GlobalContext} from "../utils/GlobalContext";
+import {add} from "ionicons/icons";
 
 
 const Studia: React.FC = () => {
 
-  const navigation = useIonRouter();
-
-  const {userName, setUserName, setUserId} = useContext(GlobalContext);
+  const {userName, logOut} = useContext(GlobalContext);
 
   const items: Array<ItemStudia> = [{name: 'one', deadline: new Date()}, {name: 'two', deadline: new Date()}];
 
-  const logOut = () => {
-    logOutUser().then(() => {
-      navigation.push("/", "forward", "replace");
-      setUserId(null);
-      setUserName(null);
-    })
+  const handleAdd = () => {
+
   }
+
 
   return (
     <IonPage>
@@ -48,9 +43,13 @@ const Studia: React.FC = () => {
           </IonToolbar>
         </IonHeader>
 
-        <IonButton class="ion-margin" fill="outline" expand="block">Add</IonButton>
-
         <ListStudia items={items}/>
+
+        <IonFab slot="fixed" vertical="bottom" horizontal="end" class="ion-margin">
+          <IonFabButton onClick={handleAdd}>
+            <IonIcon icon={add}></IonIcon>
+          </IonFabButton>
+        </IonFab>
 
       </IonContent>
     </IonPage>

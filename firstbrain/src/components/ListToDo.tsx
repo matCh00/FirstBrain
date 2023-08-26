@@ -1,5 +1,5 @@
 import "./List.css";
-import React from "react";
+import React, {useContext} from "react";
 import {
   IonButton,
   IonCard,
@@ -10,21 +10,21 @@ import {
   IonList,
   IonRow,
 } from "@ionic/react";
-import { ItemToDo } from "../models/ItemToDo";
-import { baseUrl } from "../App";
-import { PriorityEnum2 } from "../utils/Priority";
+import {ItemToDo} from "../models/ItemToDo";
+import {baseUrl} from "../App";
+import {GlobalContext} from "../utils/GlobalContext";
+import {Helpers} from "../utils/Helpers";
+
 
 interface ListProps {
   items: Array<ItemToDo>;
 }
 
-const ListToDo: React.FC<ListProps> = ({ items }) => {
 
-  const getSeverity = (key: string): string => {
-    // console.log(Object.keys(PriorityEnum));
-    // console.log(Object.values(PriorityEnum));
-    return PriorityEnum2[key.toUpperCase() as keyof typeof PriorityEnum2];
-  }
+const ListToDo: React.FC<ListProps> = ({items}) => {
+
+  const {isMobile} = useContext(GlobalContext);
+
 
   return (
     <IonCard className="ion-margin-top">
@@ -34,6 +34,7 @@ const ListToDo: React.FC<ListProps> = ({ items }) => {
           <IonRow>
             <IonCol>Name</IonCol>
             <IonCol>Priority</IonCol>
+            <IonCol>Description</IonCol>
             <IonCol>Actions</IonCol>
           </IonRow>
 
@@ -41,7 +42,8 @@ const ListToDo: React.FC<ListProps> = ({ items }) => {
             return (
               <IonItem key={i.name + i.priority} className="item">
                 <IonCol>{i.name}</IonCol>
-                <IonCol><IonLabel color={getSeverity(i.priority)}>{i.priority}</IonLabel></IonCol>
+                <IonCol><IonLabel color={Helpers.getSeverity(i.priority)}>{i.priority}</IonLabel></IonCol>
+                <IonCol>{Helpers.shortenString(i?.description ? i.description : '', isMobile ? 5 : 30)}</IonCol>
                 <IonCol>
                   <IonButton routerLink={baseUrl + "/app/todo/details"}>Details</IonButton>
                 </IonCol>
@@ -49,7 +51,7 @@ const ListToDo: React.FC<ListProps> = ({ items }) => {
             );
           })}
         </IonList>
-        
+
       </IonCardContent>
     </IonCard>
   );

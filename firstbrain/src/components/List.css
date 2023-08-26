@@ -1,8 +1,5 @@
 .item {
   padding-top: 0.7rem !important;
   align-items: center !important;
-
-  .md {
-    margin-bottom: 0.7rem !important;
-  }
+  margin-bottom: 0.7rem !important;
 }

@@ -9,14 +9,18 @@ import {
   IonList,
   IonRow,
 } from "@ionic/react";
-import { ItemZakupy } from "../models/ItemZakupy";
-import { baseUrl } from "../App";
+import {ItemZakupy} from "../models/ItemZakupy";
+import {baseUrl} from "../App";
+
 
 interface ListProps {
   items: Array<ItemZakupy>;
 }
 
-const List: React.FC<ListProps> = ({ items }) => {
+
+const List: React.FC<ListProps> = ({items}) => {
+
+
   return (
     <IonCard className="ion-margin-top">
       <IonCardContent>

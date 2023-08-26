@@ -1,38 +1,37 @@
 import {
   IonButton,
-  IonContent,
-  IonHeader, IonLabel,
+  IonContent, IonFab, IonFabButton,
+  IonHeader, IonIcon, IonLabel,
   IonPage, IonRow,
   IonTitle,
-  IonToolbar, useIonRouter,
+  IonToolbar,
 } from "@ionic/react";
 import React, {useContext} from "react";
 import ListToDo from "../components/ListToDo";
 import {ItemToDo} from "../models/ItemToDo";
-import {logOut as logOutUser} from "../backend/auth";
 import {GlobalContext} from "../utils/GlobalContext";
+import {add} from "ionicons/icons";
 
 
 const ToDo: React.FC = () => {
 
-  const navigation = useIonRouter();
-
-  const {userName, setUserName, setUserId} = useContext(GlobalContext);
+  const {userName, logOut} = useContext(GlobalContext);
 
   const items: Array<ItemToDo> = [
     {name: 'one', priority: 'wysoki'},
-    {name: 'two', priority: 'średni'},
-    {name: 'three', priority: 'niski'},
-    {name: 'four', priority: 'średni'}
+    {name: 'two', priority: 'średni', description: 'short'},
+    {
+      name: 'three',
+      priority: 'niski',
+      description: 'long long long long long long long long long long long long long long'
+    },
+    {name: 'four', priority: 'średni', description: ''}
   ];
 
-  const logOut = () => {
-    logOutUser().then(() => {
-      navigation.push("/", "forward", "replace");
-      setUserId(null);
-      setUserName(null);
-    })
+  const handleAdd = () => {
+
   }
+
 
   return (
     <IonPage>
@@ -53,9 +52,13 @@ const ToDo: React.FC = () => {
           </IonToolbar>
         </IonHeader>
 
-        <IonButton class="ion-margin" fill="outline" expand="block">Add</IonButton>
-
         <ListToDo items={items}/>
+
+        <IonFab slot="fixed" vertical="bottom" horizontal="end" class="ion-margin">
+          <IonFabButton onClick={handleAdd}>
+            <IonIcon icon={add}></IonIcon>
+          </IonFabButton>
+        </IonFab>
 
       </IonContent>
     </IonPage>

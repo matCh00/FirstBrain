@@ -9,14 +9,10 @@ interface ListProps {
   items: Array<Item>;
 }
 
+
 const List: React.FC<ListProps> = ({ name, items }) => {
   return (
     <IonCard>
-
-      {/* <IonCardHeader>
-        <IonCardTitle>{name}</IonCardTitle>
-      </IonCardHeader> */}
-
       <IonCardContent>
         <IonList>
           {

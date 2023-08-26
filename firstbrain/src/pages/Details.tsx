@@ -11,6 +11,7 @@ import {
 
 const Details: React.FC = () => {
 
+
   return (
     <IonPage>
       <IonHeader>

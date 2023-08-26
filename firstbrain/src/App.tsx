@@ -8,7 +8,7 @@ import {IonReactRouter} from "@ionic/react-router";
 import Tabs from "./pages/Tabs";
 import "./App.css";
 import Login from "./pages/Login";
-import {GlobalProvider} from "./utils/GlobalContext";
+import {GlobalContext, GlobalProvider} from "./utils/GlobalContext";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -28,6 +28,7 @@ import "@ionic/react/css/display.css";
 
 /* Theme variables */
 import "./theme/variables.css";
+import {useContext, useEffect} from "react";
 
 
 setupIonicReact();
@@ -42,20 +43,40 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
 }
 
 
-const App: React.FC = () => (
-  <IonApp>
-    <GlobalProvider>
-      <IonReactRouter>
-        <IonRouterOutlet>
+const App: React.FC = () => {
 
-          <Route exact path={baseUrl + "/"} component={Login}/>
+  const {setIsMobile} = useContext(GlobalContext);
 
-          <Route path={baseUrl + "/app"} component={Tabs}/>
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+    setIsMobile(mediaQuery.matches);
 
-        </IonRouterOutlet>
-      </IonReactRouter>
-    </GlobalProvider>
-  </IonApp>
-);
+    const handleViewportChange = (event: any) => {
+      setIsMobile(event.matches);
+    };
+
+    mediaQuery.addListener(handleViewportChange);
+    return () => {
+      mediaQuery.removeListener(handleViewportChange);
+    };
+  }, []);
+
+
+  return (
+    <IonApp>
+      <GlobalProvider>
+        <IonReactRouter>
+          <IonRouterOutlet>
+
+            <Route exact path={baseUrl + "/"} component={Login}/>
+
+            <Route path={baseUrl + "/app"} component={Tabs}/>
+
+          </IonRouterOutlet>
+        </IonReactRouter>
+      </GlobalProvider>
+    </IonApp>
+  )
+};
 
 export default App;

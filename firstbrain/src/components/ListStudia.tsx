@@ -9,14 +9,19 @@ import {
   IonList,
   IonRow,
 } from "@ionic/react";
-import { ItemStudia } from "../models/ItemStudia";
-import { baseUrl } from "../App";
+import {ItemStudia} from "../models/ItemStudia";
+import {baseUrl} from "../App";
+import {Helpers} from "../utils/Helpers";
+
 
 interface ListProps {
   items: Array<ItemStudia>;
 }
 
-const List: React.FC<ListProps> = ({ items }) => {
+
+const List: React.FC<ListProps> = ({items}) => {
+
+
   return (
     <IonCard className="ion-margin-top">
       <IonCardContent>
@@ -25,6 +30,7 @@ const List: React.FC<ListProps> = ({ items }) => {
           <IonRow>
             <IonCol>Name</IonCol>
             <IonCol>Deadline</IonCol>
+            <IonCol>Remains</IonCol>
             <IonCol>Actions</IonCol>
           </IonRow>
 
@@ -32,9 +38,10 @@ const List: React.FC<ListProps> = ({ items }) => {
             return (
               <IonItem key={i.name + i.deadline} className="item">
                 <IonCol>{i.name}</IonCol>
-                <IonCol>{i.deadline.toLocaleDateString("pl-PL", { year: 'numeric', month: '2-digit', day: '2-digit' })}</IonCol>
+                <IonCol>{Helpers.getDeadline(i.deadline)}</IonCol>
+                <IonCol>{Helpers.getRemains(i.deadline)}</IonCol>
                 <IonCol>
-                <IonButton routerLink={baseUrl + "/app/studia/details"}>Details</IonButton>
+                  <IonButton routerLink={baseUrl + "/app/studia/details"}>Details</IonButton>
                 </IonCol>
               </IonItem>
             );

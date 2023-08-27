@@ -6,21 +6,33 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import ListZakupy from "../components/ListZakupy";
-import {ItemZakupy} from "../models/ItemZakupy";
 import {GlobalContext} from "../utils/GlobalContext";
 import {add} from "ionicons/icons";
+import ModalZakupy from "../components/ModalZakupy";
+import {addAllZakupy} from "../backend/api";
+import {ItemZakupy} from "../models/ItemZakupy";
 
 
 const Zakupy: React.FC = () => {
 
-  const {userName, logOut} = useContext(GlobalContext);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const items: Array<ItemZakupy> = [{name: 'one', count: 2}, {name: 'two', count: 8}];
+  const {userId, userName, logOut, zakupyList} = useContext(GlobalContext);
 
   const handleAdd = () => {
+    setIsOpen(true)
+  }
 
+  const handleSubmit = (params: ItemZakupy) => {
+    addAllZakupy(userId + '', [params]).then(()  => {
+      setIsOpen(false);
+    })
+  }
+
+  const closeModal = () => {
+    setIsOpen(false);
   }
 
 
@@ -43,13 +55,19 @@ const Zakupy: React.FC = () => {
           </IonToolbar>
         </IonHeader>
 
-        <ListZakupy items={items}/>
+        <ListZakupy items={zakupyList}/>
 
         <IonFab slot="fixed" vertical="bottom" horizontal="end" class="ion-margin">
           <IonFabButton onClick={handleAdd}>
             <IonIcon icon={add}></IonIcon>
           </IonFabButton>
         </IonFab>
+
+        <ModalZakupy
+          isOpen={isOpen}
+          submit={handleSubmit}
+          reject={() => closeModal()}
+        ></ModalZakupy>
 
       </IonContent>
     </IonPage>

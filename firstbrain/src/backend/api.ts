@@ -1,5 +1,8 @@
 import { firestore } from "./firebase";
 import { collection, getDocs, addDoc, doc, setDoc, query, where, deleteDoc } from "firebase/firestore";
+import {ItemToDo} from "../models/ItemToDo";
+import {ItemZakupy} from "../models/ItemZakupy";
+import {ItemStudia} from "../models/ItemStudia";
 
 
 export async function addDefaultCollections(userId: string): Promise<void> {
@@ -16,22 +19,85 @@ export async function addDefaultCollections(userId: string): Promise<void> {
 }
 
 
-export async function getAllCollections(userId: string): Promise<any[]> {
-  const userRef = collection(firestore, userId);
-  const snapshot = await getDocs(userRef);
+export async function getAllToDo(userId: string): Promise<Array<ItemToDo>> {
+  const todoRef = collection(firestore, userId, 'todo', 'list');
+  const snapshot = await getDocs(todoRef);
 
-  const todos: any[] = [];
+  const todo: any[] = [];
   snapshot.forEach((doc) => {
-    todos.push({ id: doc.id, ...doc.data() });
-    console.log(doc.id, doc.data())
+    todo.push({ id: doc.id, ...doc.data() });
   });
 
-  return todos;
+  return todo;
 }
 
 
+export async function getAllZakupy(userId: string): Promise<Array<ItemZakupy>> {
+  const zakupyRef = collection(firestore, userId, 'zakupy', 'list');
+  const snapshot = await getDocs(zakupyRef);
+
+  const zakupy: any[] = [];
+  snapshot.forEach((doc) => {
+    zakupy.push({ id: doc.id, ...doc.data() });
+  });
+
+  return zakupy;
+}
 
 
+export async function getAllStudia(userId: string): Promise<Array<ItemStudia>> {
+  const studiaRef = collection(firestore, userId, 'studia', 'list');
+  const snapshot = await getDocs(studiaRef);
+
+  const studia: any[] = [];
+  snapshot.forEach((doc) => {
+    studia.push({ id: doc.id, ...doc.data() });
+  });
+
+  return studia;
+}
+
+
+export async function addToDo(userId: string, item: ItemToDo): Promise<void> {
+  const colRef = collection(firestore, userId, 'todo', 'list');
+
+  await addDoc(colRef, item)
+}
+
+
+export async function addAllToDo(userId: string, items: Array<ItemToDo>): Promise<void> {
+  await items.forEach(item => {
+    addToDo(userId, item);
+  })
+}
+
+
+export async function addZakupy(userId: string, item: ItemZakupy): Promise<void> {
+  const colRef = collection(firestore, userId, 'zakupy', 'list');
+
+  await addDoc(colRef, item)
+}
+
+
+export async function addAllZakupy(userId: string, items: Array<ItemZakupy>): Promise<void> {
+  await items.forEach(item => {
+    addZakupy(userId, item);
+  })
+}
+
+
+export async function addStudia(userId: string, item: ItemStudia): Promise<void> {
+  const colRef = collection(firestore, userId, 'studia', 'list');
+
+  await addDoc(colRef, item)
+}
+
+
+export async function addAllStudia(userId: string, items: Array<ItemStudia>): Promise<void> {
+  await items.forEach(item => {
+    addStudia(userId, item);
+  })
+}
 
 
 

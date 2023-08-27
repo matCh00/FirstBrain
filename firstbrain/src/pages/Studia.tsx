@@ -6,21 +6,33 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import ListStudia from "../components/ListStudia";
-import {ItemStudia} from "../models/ItemStudia";
 import {GlobalContext} from "../utils/GlobalContext";
 import {add} from "ionicons/icons";
+import {addAllStudia} from "../backend/api";
+import {ItemStudia} from "../models/ItemStudia";
+import ModalStudia from "../components/ModalStudia";
 
 
 const Studia: React.FC = () => {
 
-  const {userName, logOut} = useContext(GlobalContext);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const items: Array<ItemStudia> = [{name: 'one', deadline: new Date()}, {name: 'two', deadline: new Date()}];
+  const {userId, userName, logOut, studiaList} = useContext(GlobalContext);
 
   const handleAdd = () => {
+    setIsOpen(true)
+  }
 
+  const handleSubmit = (params: ItemStudia) => {
+    addAllStudia(userId + '', [params]).then(()  => {
+      setIsOpen(false);
+    })
+  }
+
+  const closeModal = () => {
+    setIsOpen(false);
   }
 
 
@@ -43,13 +55,19 @@ const Studia: React.FC = () => {
           </IonToolbar>
         </IonHeader>
 
-        <ListStudia items={items}/>
+        <ListStudia items={studiaList}/>
 
         <IonFab slot="fixed" vertical="bottom" horizontal="end" class="ion-margin">
           <IonFabButton onClick={handleAdd}>
             <IonIcon icon={add}></IonIcon>
           </IonFabButton>
         </IonFab>
+
+        <ModalStudia
+          isOpen={isOpen}
+          submit={handleSubmit}
+          reject={() => closeModal()}
+        ></ModalStudia>
 
       </IonContent>
     </IonPage>

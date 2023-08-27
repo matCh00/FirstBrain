@@ -1,7 +1,7 @@
 import {
   IonButton,
   IonContent,
-  IonHeader,
+  IonHeader, IonLoading,
   IonPage,
   IonTitle,
   IonToolbar,
@@ -9,19 +9,21 @@ import {
 } from "@ionic/react";
 import {useContext, useState} from "react";
 import {logIn as logInUser, register as registerUser} from "../backend/auth";
-import {addDefaultCollections} from "../backend/api";
+import {addDefaultCollections, getAllStudia, getAllToDo, getAllZakupy} from "../backend/api";
 import {GlobalContext} from "../utils/GlobalContext";
-import LoginModal from "../components/LoginModal";
+import ModalLogin from "../components/ModalLogin";
 
 
 const Login: React.FC = () => {
 
   const navigation = useIonRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
   const [mode, setMode] = useState(-1);
   const [present] = useIonToast();
 
   const presentToast = () => {
+    setShowLoading(false);
     present({
       message: 'Incorrect credentials!',
       duration: 2000,
@@ -31,26 +33,39 @@ const Login: React.FC = () => {
     });
   };
 
-  const {setUserName, setUserId} = useContext(GlobalContext);
+  const {userId, setUserName, setUserId, setTodoList, setZakupyList, setStudiaList} = useContext(GlobalContext);
 
   const onSubmit = (params: {email: string, password: string}) => {
+    setShowLoading(true);
     if (mode === 1)
-      logInUser(params.email, params.password).then((res) => {
+      logInUser(params.email, params.password).then(async (res) => {
         if (res) {
           setIsOpen(false);
           setUserName(res.email);
           setUserId(res.uid);
+
+          const todoList = await getAllToDo(userId + '');
+          setTodoList(todoList);
+          const zakupyList = await getAllZakupy(userId + '');
+          setZakupyList(zakupyList);
+          const studiaList = await getAllStudia(userId + '');
+          setStudiaList(studiaList);
+
+          setShowLoading(false);
           navigation.push("/app", "forward", "replace");
         } else
           presentToast();
       })
     else if (mode === 2)
-      registerUser(params.email, params.password).then((res) => {
+      registerUser(params.email, params.password).then(async (res) => {
         if (res) {
           setIsOpen(false);
           setUserName(res.email);
           setUserId(res.uid);
-          addDefaultCollections(res.uid);
+
+          await addDefaultCollections(res.uid);
+
+          setShowLoading(false);
           navigation.push("/app", "forward", "replace");
         } else
           presentToast();
@@ -69,10 +84,20 @@ const Login: React.FC = () => {
     setIsOpen(true);
   };
 
-  const doPreview = () => {
+  const doPreview = async () => {
     setMode(3);
+    setShowLoading(true);
     setUserId('test');
     setUserName('test');
+
+    const todoList = await getAllToDo('test');
+    setTodoList(todoList);
+    const zakupyList = await getAllZakupy('test');
+    setZakupyList(zakupyList);
+    const studiaList = await getAllStudia('test');
+    setStudiaList(studiaList);
+
+    setShowLoading(false);
     navigation.push("/app", "forward", "replace");
   };
 
@@ -104,11 +129,16 @@ const Login: React.FC = () => {
         </div>
       </IonContent>
 
-      <LoginModal
+      <IonLoading
+        isOpen={showLoading}
+        message={'Please wait...'}
+      />
+
+      <ModalLogin
         isOpen={isOpen}
         submit={onSubmit}
-        reject={closeModal}
-      ></LoginModal>
+        reject={() => closeModal()}
+      ></ModalLogin>
 
     </IonPage>
   );

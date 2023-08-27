@@ -9,18 +9,18 @@ import {useForm} from "react-hook-form"
 
 
 type Inputs = {
-  email: string
-  password: string
+  email: string,
+  password: string,
 }
 
-interface LoginModalProps {
-  isOpen: boolean;
+interface ModalLoginProps {
+  isOpen: boolean,
   submit: (params: {email: string, password: string}) => void,
-  reject: () => void
+  reject: () => void,
 }
 
 
-const LoginModal: React.FC<LoginModalProps> = (props: {isOpen: boolean, submit: any, reject: any}) => {
+const ModalLogin: React.FC<ModalLoginProps> = (props: {isOpen: boolean, submit: any, reject: any}) => {
 
   const {handleSubmit, setValue, register} = useForm<Inputs>();
 
@@ -31,16 +31,17 @@ const LoginModal: React.FC<LoginModalProps> = (props: {isOpen: boolean, submit: 
   const rejectForm = () => {
     setValue("email", '');
     setValue("password", '');
+    props.reject();
   }
 
 
   return (
-    <IonModal isOpen={props.isOpen} onIonModalDidDismiss={() => rejectForm}>
+    <IonModal isOpen={props.isOpen} onIonModalDidDismiss={() => rejectForm()} backdropDismiss={false}>
       <IonHeader>
         <IonToolbar>
           <IonTitle>Credentials</IonTitle>
           <IonButtons slot="end">
-            <IonButton onClick={() => rejectForm}>Close</IonButton>
+            <IonButton onClick={() => rejectForm()}>Close</IonButton>
           </IonButtons>
         </IonToolbar>
       </IonHeader>
@@ -78,4 +79,4 @@ const LoginModal: React.FC<LoginModalProps> = (props: {isOpen: boolean, submit: 
   );
 };
 
-export default LoginModal;
+export default ModalLogin;

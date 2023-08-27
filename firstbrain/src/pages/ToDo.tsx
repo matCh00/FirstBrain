@@ -6,30 +6,33 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import ListToDo from "../components/ListToDo";
-import {ItemToDo} from "../models/ItemToDo";
 import {GlobalContext} from "../utils/GlobalContext";
 import {add} from "ionicons/icons";
+import ModalToDo from "../components/ModalToDo";
+import {addAllToDo} from "../backend/api";
+import {ItemToDo} from "../models/ItemToDo";
 
 
 const ToDo: React.FC = () => {
 
-  const {userName, logOut} = useContext(GlobalContext);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const items: Array<ItemToDo> = [
-    {name: 'one', priority: 'wysoki'},
-    {name: 'two', priority: 'średni', description: 'short'},
-    {
-      name: 'three',
-      priority: 'niski',
-      description: 'long long long long long long long long long long long long long long'
-    },
-    {name: 'four', priority: 'średni', description: ''}
-  ];
+  const {userId, userName, logOut, todoList} = useContext(GlobalContext);
 
   const handleAdd = () => {
+    setIsOpen(true);
+  }
 
+  const handleSubmit = (params: ItemToDo) => {
+    addAllToDo(userId + '', [params]).then(()  => {
+      setIsOpen(false);
+    })
+  }
+
+  const closeModal = () => {
+    setIsOpen(false);
   }
 
 
@@ -52,13 +55,19 @@ const ToDo: React.FC = () => {
           </IonToolbar>
         </IonHeader>
 
-        <ListToDo items={items}/>
+        <ListToDo items={todoList}/>
 
         <IonFab slot="fixed" vertical="bottom" horizontal="end" class="ion-margin">
           <IonFabButton onClick={handleAdd}>
             <IonIcon icon={add}></IonIcon>
           </IonFabButton>
         </IonFab>
+
+        <ModalToDo
+          isOpen={isOpen}
+          submit={handleSubmit}
+          reject={() => closeModal()}
+        ></ModalToDo>
 
       </IonContent>
     </IonPage>
